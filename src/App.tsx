@@ -33,7 +33,8 @@ function App() {
     ref.current?.load();
   }, []);
 
-  const onClick = React.useCallback(() => {
+  const onClick: React.MouseEventHandler<HTMLElement> = React.useCallback((e) => {
+    e.stopPropagation();
     if(value === 0) {
       setTime(t => t - 1);
       update();
@@ -52,6 +53,7 @@ function App() {
     <div className="main" onClick={onClick}>
       <div className="time">{time}</div>
       <div className="loading">{audioReady ? "Ready" : "Loading"}</div>
+      <input type="button" value="Play" onClick={onClick}></input>
       <audio
         ref={ref}
         className="audio"
