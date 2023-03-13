@@ -30,10 +30,9 @@ function App() {
   }, [time]);
 
   const onClick: React.MouseEventHandler<HTMLElement> = React.useCallback((e) => {
-    e.stopPropagation();
-    ref.current?.load();
     if(value === 0) {
       setTime(t => t - 1);
+      ref.current?.load();
       update();
     } else {
       window.clearInterval(timer.current);
@@ -50,7 +49,6 @@ function App() {
     <div className="main" onClick={onClick}>
       <div className="time">{time}</div>
       <div className="loading">{audioReady ? "Ready" : "Loading"}</div>
-      <input type="button" value="Play" onClick={onClick}></input>
       <audio
         ref={ref}
         className="audio"
