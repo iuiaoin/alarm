@@ -13,6 +13,16 @@ html, body {
   height: 100%;
 }
 
+.light {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #000000d9;
+}
+
+.dark {
+  background-color: #000000d9;
+  color: rgba(255, 255, 255, 0.8);
+}
+
 .main {
   width: 100%;
   height: 100%;
@@ -20,7 +30,6 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #000000d9;
 }
 
 .hidden {
@@ -42,8 +51,6 @@ html, body {
 .time {
   font-size: 200px;
   font-weight: bolder;
-  color: white;
-  opacity: 0.8;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

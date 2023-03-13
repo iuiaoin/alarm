@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css'
 
-const COUNT_DOWN_TIME = 60;
+const COUNT_DOWN_TIME = 10;
 
 function App() {
   const [time, setTime] = React.useState(COUNT_DOWN_TIME);
@@ -9,6 +9,9 @@ function App() {
   const timer = React.useRef<number>();
   const ref = React.useRef<HTMLAudioElement>(null);
   const [ready, setReady] = React.useState(false);
+  const isLight = React.useMemo(() => {
+    return time <= 5 && (time % 2 === 1); 
+  }, [time]);
 
   const onCanPlayThrough = React.useCallback(() => {
     setReady(true);
@@ -62,7 +65,7 @@ function App() {
   }, []);
 
   return (
-    <div className="main" onClick={onClick}>
+    <div className={`main ${isLight ? "light" : "dark"}`} onClick={onClick}>
       <div className="time">{time}</div>
       <button className={`reset ${ ready ? "show" : "hidden" }`} onClick={onReset}>Reset</button>
       <audio
