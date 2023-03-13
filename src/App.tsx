@@ -51,7 +51,7 @@ function App() {
       <audio
         ref={ref}
         className="audio"
-        preload="auto"
+        preload="metadata"
         controls
         src="/audio/alarm.mp3"
         playsInline
