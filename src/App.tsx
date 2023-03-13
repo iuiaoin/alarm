@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css'
 
-const COUNT_DOWN_TIME = 10;
+const COUNT_DOWN_TIME = 60;
 
 function App() {
   const [time, setTime] = React.useState(COUNT_DOWN_TIME);
