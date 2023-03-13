@@ -1,13 +1,18 @@
 import React from 'react'
 import './App.css'
 
-const COUNT_DOWN_TIME = 60;
+const COUNT_DOWN_TIME = 10;
 
 function App() {
   const [time, setTime] = React.useState(COUNT_DOWN_TIME);
   const [value, update] = React.useReducer(x => x + 1, 0); 
   const timer = React.useRef<number>();
   const ref = React.useRef<HTMLAudioElement>(null);
+  const [audioReady, setAudioReady] = React.useState(false);
+
+  const onCanPlayThrough = React.useCallback(() => {
+    setAudioReady(true);
+  }, []);
 
   React.useEffect(() => {
     if(value > 0) {
@@ -42,6 +47,7 @@ function App() {
   return (
     <div className="main" onClick={onClick}>
       <div className="time">{time}</div>
+      <div className="loading">{audioReady ? "Ready" : "Loading"}</div>
       <audio
         ref={ref}
         className="audio"
@@ -49,6 +55,7 @@ function App() {
         src="/audio/LimbsOfFaith.mp3"
         playsInline
         autoPlay={false}
+        onCanPlayThrough={onCanPlayThrough}
       />
     </div>
   )
