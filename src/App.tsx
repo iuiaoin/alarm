@@ -29,12 +29,9 @@ function App() {
     }
   }, [time]);
 
-  React.useEffect(() => {
-    ref.current?.load();
-  }, []);
-
   const onClick: React.MouseEventHandler<HTMLElement> = React.useCallback((e) => {
     e.stopPropagation();
+    ref.current?.load();
     if(value === 0) {
       setTime(t => t - 1);
       update();
