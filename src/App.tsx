@@ -29,6 +29,10 @@ function App() {
     }
   }, [time]);
 
+  React.useEffect(() => {
+    ref.current?.load();
+  }, []);
+
   const onClick = React.useCallback(() => {
     if(value === 0) {
       setTime(t => t - 1);
