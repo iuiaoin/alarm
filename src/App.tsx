@@ -5,13 +5,13 @@ const COUNT_DOWN_TIME = 10;
 
 function App() {
   const [time, setTime] = React.useState(COUNT_DOWN_TIME);
-  const [value, update] = React.useReducer(x => x + 1, 0); 
+  const [value, setValue] = React.useState(0); 
   const timer = React.useRef<number>();
   const ref = React.useRef<HTMLAudioElement>(null);
-  const [audioReady, setAudioReady] = React.useState(false);
+  const [ready, setReady] = React.useState(false);
 
   const onCanPlayThrough = React.useCallback(() => {
-    setAudioReady(true);
+    setReady(true);
   }, []);
 
   React.useEffect(() => {
@@ -29,11 +29,16 @@ function App() {
     }
   }, [time]);
 
-  const onClick: React.MouseEventHandler<HTMLElement> = React.useCallback((e) => {
+  const onClick: React.MouseEventHandler<HTMLElement> = React.useCallback(() => {
     if(value === 0) {
       setTime(t => t - 1);
+      /** 
+       * In Safari on iOS (for all devices, including iPad), preload and autoplay are disabled. 
+       * This means the JavaScript play() and load() methods are also inactive until the user initiates playback.
+       * Unless the play() or load() method is triggered by user action.
+       */ 
       ref.current?.load();
-      update();
+      setValue(v => v + 1);
     } else {
       window.clearInterval(timer.current);
       setTime(COUNT_DOWN_TIME);
@@ -41,14 +46,25 @@ function App() {
       if(ref.current) {
         ref.current.currentTime = 0;
       }
-      update();
+      setValue(v => v + 1);
     }
   }, [value])
+
+  const onReset: React.MouseEventHandler<HTMLElement> = React.useCallback((e) => {
+    e.stopPropagation();
+    window.clearInterval(timer.current);
+    setTime(COUNT_DOWN_TIME);
+    setValue(0);
+    ref.current?.pause();
+    if(ref.current) {
+      ref.current.currentTime = 0;
+    }
+  }, []);
 
   return (
     <div className="main" onClick={onClick}>
       <div className="time">{time}</div>
-      <div className="loading">{audioReady ? "Ready" : "Loading"}</div>
+      <button className={`reset ${ ready ? "show" : "hidden" }`} onClick={onReset}>Reset</button>
       <audio
         ref={ref}
         className="audio"

@@ -23,12 +23,20 @@ html, body {
   background-color: #000000d9;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
+.show {
+  visibility: visible;
+}
+
 .audio {
   visibility: hidden;
 }
 
-.loading {
-  color: white;
+.reset {
+  
 }
 
 .time {
