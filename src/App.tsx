@@ -52,7 +52,7 @@ function App() {
         ref={ref}
         className="audio"
         controls
-        src="/audio/LimbsOfFaith.mp3"
+        src="/audio/alarm.mp3"
         playsInline
         autoPlay={false}
         onCanPlayThrough={onCanPlayThrough}
