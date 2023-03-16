@@ -27,17 +27,17 @@ export const App: React.FC = () => {
     setHidden(false);
   }, []);
 
-  return <>{hidden ? <div className="root dark">
-    <Particle color="#f9f9f9" hidden={time === CountDownTime.Crazy} direction="left" onComplete={onComplete}>
+  return <>{hidden ? <div className="root">
+    <Particle color="#EFEFEF" hidden={time === CountDownTime.Crazy} direction="left" onComplete={onComplete}>
       <button className="button" onClick={onClickCrazy}>疯狗模式</button>
     </Particle>
-    <Particle color="#f9f9f9" hidden={time === CountDownTime.Compete} direction="left" onComplete={onComplete}>
+    <Particle color="#EFEFEF" hidden={time === CountDownTime.Compete} direction="left" onComplete={onComplete}>
       <button className="button" onClick={onClickCompete}>竞技模式</button>
     </Particle>
-    <Particle color="#f9f9f9" hidden={time === CountDownTime.Normal} direction="left" onComplete={onComplete}>
+    <Particle color="#EFEFEF" hidden={time === CountDownTime.Normal} direction="left" onComplete={onComplete}>
       <button className="button" onClick={onClickNormal}>正常模式</button>
     </Particle>
-    <Particle color="#f9f9f9" hidden={time === CountDownTime.Casual} direction="left" onComplete={onComplete}>
+    <Particle color="#EFEFEF" hidden={time === CountDownTime.Casual} direction="left" onComplete={onComplete}>
       <button className="button" onClick={onClickCasual}>休闲模式</button>
     </Particle>
   </div> : <Timer initTime={time} />}</>;
