@@ -11,14 +11,9 @@ export const Timer: React.FC<IProps> = ({ initTime, startRef }) => {
   const [value, setValue] = React.useState(0); 
   const timer = React.useRef<number>();
   const ref = React.useRef<HTMLAudioElement>(null);
-  const [ready, setReady] = React.useState(false);
   const isLight = React.useMemo(() => {
     return time <= 5 && (time % 2 === 1); 
   }, [time]);
-
-  const onCanPlayThrough = React.useCallback(() => {
-    setReady(true);
-  }, []);
 
   React.useEffect(() => {
     if(value > 0) {
@@ -74,7 +69,7 @@ export const Timer: React.FC<IProps> = ({ initTime, startRef }) => {
   return (
     <div className={`main ${isLight ? "light" : "dark"}`} onClick={onClick}>
       <div className="time">{time}</div>
-      <button className={`reset ${ ready ? "show" : "hidden" }`} onClick={onReset}>Reset</button>
+      <button className="reset" onClick={onReset}>Reset</button>
       <audio
         ref={ref}
         className="audio"
@@ -83,7 +78,6 @@ export const Timer: React.FC<IProps> = ({ initTime, startRef }) => {
         src="/audio/alarm.mp3"
         playsInline
         autoPlay={false}
-        onCanPlayThrough={onCanPlayThrough}
       />
     </div>
   )
