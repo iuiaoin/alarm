@@ -15,3 +15,8 @@
   background-color: #EFEFEF;
   color: #000000d9;
 }
+
+.audio {
+  visibility: hidden;
+  height: 0;
+}

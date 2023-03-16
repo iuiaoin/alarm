@@ -3,9 +3,10 @@ import './Timer.css'
 
 interface IProps {
   initTime: number;
+  startRef: React.RefObject<HTMLAudioElement>
 }
 
-export const Timer: React.FC<IProps> = ({ initTime }) => {
+export const Timer: React.FC<IProps> = ({ initTime, startRef }) => {
   const [time, setTime] = React.useState(initTime);
   const [value, setValue] = React.useState(0); 
   const timer = React.useRef<number>();
@@ -35,6 +36,10 @@ export const Timer: React.FC<IProps> = ({ initTime }) => {
   }, [time]);
 
   const onClick: React.MouseEventHandler<HTMLElement> = React.useCallback(() => {
+    if(startRef.current) {
+      startRef.current.currentTime = 0;
+    }
+    startRef.current?.play();
     if(value === 0) {
       setTime(t => t - 1);
       /** 

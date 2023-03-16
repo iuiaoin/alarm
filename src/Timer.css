@@ -35,10 +35,6 @@ html, body {
   visibility: visible;
 }
 
-.audio {
-  visibility: hidden;
-}
-
 .reset {
   color: #000000d9;
 }
