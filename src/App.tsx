@@ -1,85 +1,32 @@
-import React from 'react'
-import './App.css'
+import React from "react";
+import { CountDownTime } from "./constants";
+import { Timer } from "./Timer";
 
-const COUNT_DOWN_TIME = 60;
-
-function App() {
-  const [time, setTime] = React.useState(COUNT_DOWN_TIME);
-  const [value, setValue] = React.useState(0); 
-  const timer = React.useRef<number>();
-  const ref = React.useRef<HTMLAudioElement>(null);
-  const [ready, setReady] = React.useState(false);
-  const isLight = React.useMemo(() => {
-    return time <= 5 && (time % 2 === 1); 
-  }, [time]);
-
-  const onCanPlayThrough = React.useCallback(() => {
-    setReady(true);
+export const App: React.FC = () => {
+  const [time, setTime] = React.useState(CountDownTime.Compete);
+  const [hidden, setHidden] = React.useState(true);
+  const onClickCrazy = React.useCallback(() => {
+    setTime(CountDownTime.Crazy);
+    setHidden(false);
   }, []);
-
-  React.useEffect(() => {
-    if(value > 0) {
-      timer.current = window.setInterval(() => {
-        setTime(t => t - 1);
-      }, 1000);
-    }
-  }, [value]);
-
-  React.useEffect(() => {
-    if(time === 0) {
-      window.clearInterval(timer.current);
-      ref.current?.play();
-    }
-  }, [time]);
-
-  const onClick: React.MouseEventHandler<HTMLElement> = React.useCallback(() => {
-    if(value === 0) {
-      setTime(t => t - 1);
-      /** 
-       * In Safari on iOS (for all devices, including iPad), preload and autoplay are disabled. 
-       * This means the JavaScript play() and load() methods are also inactive until the user initiates playback.
-       * Unless the play() or load() method is triggered by user action.
-       */ 
-      ref.current?.load();
-      setValue(v => v + 1);
-    } else {
-      window.clearInterval(timer.current);
-      setTime(COUNT_DOWN_TIME);
-      ref.current?.pause();
-      if(ref.current) {
-        ref.current.currentTime = 0;
-      }
-      setValue(v => v + 1);
-    }
-  }, [value])
-
-  const onReset: React.MouseEventHandler<HTMLElement> = React.useCallback((e) => {
-    e.stopPropagation();
-    window.clearInterval(timer.current);
-    setTime(COUNT_DOWN_TIME);
-    setValue(0);
-    ref.current?.pause();
-    if(ref.current) {
-      ref.current.currentTime = 0;
-    }
+  const onClickCompete = React.useCallback(() => {
+    setTime(CountDownTime.Compete);
+    setHidden(false);
   }, []);
+  const onClickNormal = React.useCallback(() => {
+    setTime(CountDownTime.Normal);
+    setHidden(false);
+  }, []);
+  const onClickCasual = React.useCallback(() => {
+    setTime(CountDownTime.Casual);
+    setHidden(false);
+  }, []);
+  return <>{hidden ? <div>
+    <button onClick={onClickCrazy}>疯狗模式</button>
+    <button onClick={onClickCompete}>竞技模式</button>
+    <button onClick={onClickNormal}>正常模式</button>
+    <button onClick={onClickCasual}>休闲模式</button>
+  </div> : <Timer initTime={time} />}</>;
+};
 
-  return (
-    <div className={`main ${isLight ? "light" : "dark"}`} onClick={onClick}>
-      <div className="time">{time}</div>
-      <button className={`reset ${ ready ? "show" : "hidden" }`} onClick={onReset}>Reset</button>
-      <audio
-        ref={ref}
-        className="audio"
-        preload="metadata"
-        controls
-        src="/audio/alarm.mp3"
-        playsInline
-        autoPlay={false}
-        onCanPlayThrough={onCanPlayThrough}
-      />
-    </div>
-  )
-}
-
-export default App
+export default App;
